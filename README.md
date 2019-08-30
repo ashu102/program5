@@ -11,39 +11,39 @@ between i to min(N, i + K - 1) by increasing their state by 1.This whole process
 1 sec and he can repeat this process any no. of times until he gets all lights = G . Find
 the minimum time to do the process as Zolo is getting late for work.
 
+
 import java.util.Scanner;
-
+ 
 class TestClass {
-public static void main(String args[] ) throws Exception {
-try(Scanner scanner = new Scanner(System.in)) {
-int N = scanner.nextInt();
-int K = scanner.nextInt();
-int[] input = new int[N];
-
-for(int idx = 0; idx < N; ++idx) {
-switch (scanner.next().charAt(0)) {
-case 'G': input[idx] = 0; break;
-case 'R': input[idx] = 1; break;
-case 'Y': input[idx] = 2; break;
+    public static void main(String args[] ) throws Exception {
+        try(Scanner scanner = new Scanner(System.in)) {
+            int N = scanner.nextInt();
+            int K = scanner.nextInt();
+            int[] input = new int[N];
+ 
+            for(int idx = 0; idx < N; ++idx) {
+                switch (scanner.next().charAt(0)) {
+                    case 'G': input[idx] = 0; break;
+                    case 'R': input[idx] = 1; break;
+                    case 'Y': input[idx] = 2; break;
+                }
+            }
+ 
+            int[] temp = new int[N];
+            int offset = 0, result = 0;
+ 
+            for(int idx = 0; idx < N; ++idx) {
+                input[idx] += offset;
+ 
+                switch (input[idx] % 3) {
+                    case 1: temp[idx] = 2; result += 2; offset += 2; break;
+                    case 2: temp[idx] = 1; result += 1; offset += 1; break;
+                    default: temp[idx] = 0; break;
+                }
+ 
+                if ((idx+1)-K >= 0) offset -= temp[idx+1-K];
+            }
+            System.out.println(result);
+        }
+    }
 }
-}
-
-int[] temp = new int[N];
-int offset = 0, result = 0;
-
-for(int idx = 0; idx < N; ++idx) {
-input[idx] += offset;
-
-switch (input[idx] % 3) {
-case 1: temp[idx] = 2; result += 2; offset += 2; break;
-case 2: temp[idx] = 1; result += 1; offset += 1; break;
-default: temp[idx] = 0; break;
-}
-
-if ((idx+1)-K >= 0) offset -= temp[idx+1-K];
-}
-System.out.println(result);
-}
-}
-}
-
